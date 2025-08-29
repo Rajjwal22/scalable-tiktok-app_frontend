@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_BASE } from "../config";
 
 export default function Signup() {
   const [name, setName] = useState("");
@@ -12,7 +13,7 @@ export default function Signup() {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/register", { name, email, password, role });
+      await axios.post(`${API_BASE}/register`, { name, email, password, role });
       alert("Account created! Please login.");
       navigate("/login");
     } catch {

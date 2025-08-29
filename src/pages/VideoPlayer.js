@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { API_BASE, MEDIA_BASE } from "../config";
 
 export default function VideoPlayer() {
   const { id } = useParams();
@@ -11,7 +12,7 @@ export default function VideoPlayer() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/videos`)
+      .get(`${API_BASE}/videos`)
       .then((res) => {
         const v = res.data.find((vid) => vid._id === id);
         setVideo(v);
@@ -19,12 +20,12 @@ export default function VideoPlayer() {
       .catch((err) => console.error(err));
 
     axios
-      .get(`http://localhost:5000/api/comments/${id}`)
+      .get(`${API_BASE}/comments/${id}`)
       .then((res) => setComments(res.data))
       .catch((err) => console.error(err));
 
     axios
-      .get(`http://localhost:5000/api/ratings/${id}`)
+      .get(`${API_BASE}/ratings/${id}`)
       .then((res) => {
         if (res.data.length > 0) {
           const avg = res.data.reduce((a, b) => a + b.stars, 0) / res.data.length;
@@ -40,7 +41,7 @@ export default function VideoPlayer() {
 
     try {
       await axios.post(
-        `http://localhost:5000/api/comments/${id}`,
+        `${API_BASE}/comments/${id}`,
         { text: newComment },
         { headers: { Authorization: token } }
       );
@@ -57,7 +58,7 @@ export default function VideoPlayer() {
 
     try {
       await axios.post(
-        `http://localhost:5000/api/ratings/${id}`,
+        `${API_BASE}/ratings/${id}`,
         { stars },
         { headers: { Authorization: token } }
       );
@@ -76,7 +77,7 @@ export default function VideoPlayer() {
       <video
         className="w-full rounded-lg mb-4 shadow-md"
         controls
-        src={`http://localhost:5000${video.videoUrl}`}
+        src={`${MEDIA_BASE}${video.videoUrl}`}
       />
 
       <div className="space-y-1 text-gray-700 mb-4">

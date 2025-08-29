@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { API_BASE, MEDIA_BASE } from "../config";
 
 export default function Dashboard() {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/videos")
+      .get(`${API_BASE}/videos`)
       .then((res) => setVideos(res.data))
       .catch((err) => console.error(err));
   }, []);
@@ -24,7 +25,7 @@ export default function Dashboard() {
             <Link to={`/video/${v._id}`} key={v._id}>
               <div className="bg-white rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 p-3">
                 <img
-                  src={`http://localhost:5000${v.thumbnailUrl || "/uploads/default.png"}`}
+                  src={`${MEDIA_BASE}${v.thumbnailUrl || "/uploads/default.png"}`}
                   alt={v.title}
                   className="rounded-xl w-full h-48 object-cover mb-3"
                 />

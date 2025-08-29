@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { API_BASE } from "../config";
 
 export default function Upload() {
   const [title, setTitle] = useState("");
@@ -27,7 +28,7 @@ export default function Upload() {
     formData.append("video", videoFile);
 
     try {
-      await axios.post("http://localhost:5000/api/videos", formData, {
+      await axios.post(`${API_BASE}/videos`, formData, {
         headers: { Authorization: token, "Content-Type": "multipart/form-data" }
       });
       alert("Video uploaded successfully!");
